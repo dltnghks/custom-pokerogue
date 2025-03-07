@@ -9,7 +9,8 @@ export abstract class ApiBase {
   public readonly ERR_GENERIC: string = "There was an error";
 
   protected readonly base: string;
-
+  protected getCount: number = 0;
+  protected postCount: number = 0;
   //#region Public
 
   constructor(base: string) {
@@ -23,6 +24,8 @@ export abstract class ApiBase {
    * @param path The path to send the request to.
    */
   protected async doGet(path: string) {
+    console.log(this.constructor.name, " get count : ", this.getCount);
+    this.getCount++;
     return this.doFetch(path, { method: "GET" });
   }
 
@@ -53,6 +56,8 @@ export abstract class ApiBase {
         headers["Content-Type"] = "text/plain";
       }
     }
+    console.log(this.constructor.name, " post count : ", this.postCount);
+    this.postCount++;
 
     return await this.doFetch(path, { method: "POST", body, headers });
   }
@@ -63,6 +68,7 @@ export abstract class ApiBase {
    * @param config The request {@linkcode RequestInit | Configuration}.
    */
   protected async doFetch(path: string, config: RequestInit): Promise<Response> {
+
     config.headers = {
       ...config.headers,
       Authorization: getCookie(SESSION_ID_COOKIE_NAME),
@@ -72,6 +78,10 @@ export abstract class ApiBase {
     if (import.meta.env.DEV) {
       console.log(`Sending ${config.method ?? "GET"} request to: `, this.base + path, config);
     }
+
+    console.log(this.base + path);
+    console.log(config.headers);
+    console.log(config.method);
 
     return await fetch(this.base + path, config);
   }

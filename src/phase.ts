@@ -5,6 +5,7 @@ export class Phase {
     if (globalScene.abilityBar.shown) {
       globalScene.abilityBar.resetAutoHideTimer();
     }
+    globalScene.gameData.saveAll(true, true, true);
   }
 
   end() {

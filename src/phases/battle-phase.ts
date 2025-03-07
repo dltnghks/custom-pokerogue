@@ -4,6 +4,7 @@ import { Phase } from "#app/phase";
 
 export class BattlePhase extends Phase {
   constructor() {
+    console.log("New Battle Phase");
     super();
   }
 
