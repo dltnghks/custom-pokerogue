@@ -655,6 +655,7 @@ export default class BattleInfo extends Phaser.GameObjects.Container {
 
       this.shinyIcon.setVisible(pokemon.isShiny());
 
+      console.log("Battle Data Update");
       resolve();
     });
   }

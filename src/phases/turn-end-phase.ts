@@ -64,4 +64,10 @@ export class TurnEndPhase extends FieldPhase {
 
     this.end();
   }
+
+  end() {
+    globalScene.gameData.saveAll(true, true);
+    super.end();
+  }
+
 }

@@ -94,12 +94,14 @@ export function getDataTypeKey(dataType: GameDataType, slotId: number = 0): stri
 }
 
 export function encrypt(data: string, bypassLogin: boolean): string {
+  return data;
   return (bypassLogin
     ? (data: string) => btoa(data)
     : (data: string) => AES.encrypt(data, saveKey))(data) as unknown as string; // TODO: is this correct?
 }
 
 export function decrypt(data: string, bypassLogin: boolean): string {
+  return data;
   return (bypassLogin
     ? (data: string) => atob(data)
     : (data: string) => AES.decrypt(data, saveKey).toString(enc.Utf8))(data);
@@ -450,8 +452,11 @@ export class GameData {
               return resolve(false);
             }
 
-            const cachedSystem = localStorage.getItem(`data_${loggedInUser?.username}`);
-            this.initSystem(saveDataOrErr, cachedSystem ? AES.decrypt(cachedSystem, saveKey).toString(enc.Utf8) : undefined).then(resolve);
+            // 캐시에 시스템 데이터가 저장되어 있으면 사용
+            // => 암호화를 없애서 에러가 남. 주석 처리
+            // const cachedSystem = localStorage.getItem(`data_${loggedInUser?.username}`);
+            // this.initSystem(saveDataOrErr, cachedSystem ? AES.decrypt(cachedSystem, saveKey).toString(enc.Utf8) : undefined).then(resolve);
+            this.initSystem(saveDataOrErr).then(resolve);
           });
       } else {
         this.initSystem(decrypt(localStorage.getItem(`data_${loggedInUser?.username}`)!, bypassLogin)).then(resolve); // TODO: is this bang correct?
@@ -999,6 +1004,7 @@ export class GameData {
               return resolve(null);
             }
 
+            console.log(response);
             localStorage.setItem(`sessionData${slotId ? slotId : ""}_${loggedInUser?.username}`, encrypt(response, bypassLogin));
 
             await handleSessionData(response);
@@ -1340,9 +1346,11 @@ export class GameData {
 
         localStorage.setItem(`data_${loggedInUser?.username}`, encrypt(JSON.stringify(systemData, (k: any, v: any) => typeof v === "bigint" ? v <= maxIntAttrValue ? Number(v) : v.toString() : v), bypassLogin));
 
+        console.log(sessionData);
         localStorage.setItem(`sessionData${globalScene.sessionSlotId ? globalScene.sessionSlotId : ""}_${loggedInUser?.username}`, encrypt(JSON.stringify(sessionData), bypassLogin));
 
-        console.debug("Session data saved");
+        const log = JSON.stringify(sessionData);
+        console.debug(log);
 
         if (!bypassLogin && sync) {
           pokerogueApi.savedata.updateAll(request)
