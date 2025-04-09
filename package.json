@@ -12,7 +12,7 @@
 		"test": "vitest run --project pre && vitest run --project main",
 		"test:cov": "vitest run --project pre && vitest run --project main --coverage",
 		"test:watch": "vitest run --project pre && vitest watch --project main --coverage",
-		"test:silent": "vitest run --project pre && vitest run --project main --silent",
+		"test:silent": "vitest run --project pre && vitest run --project main --silent=false",
 		"typecheck": "tsc --noEmit",
 		"eslint": "eslint --fix .",
 		"eslint-ci": "eslint .",
