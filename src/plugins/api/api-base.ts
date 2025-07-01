@@ -23,6 +23,7 @@ export abstract class ApiBase {
    * @param path The path to send the request to.
    */
   protected async doGet(path: string) {
+    console.log("start doGet");
     return this.doFetch(path, { method: "GET" });
   }
 
@@ -35,6 +36,8 @@ export abstract class ApiBase {
   protected async doPost<D = undefined>(path: string, bodyData?: D, dataType: DataType = "json") {
     let body: string | undefined = undefined;
     const headers: HeadersInit = {};
+
+    console.log("start doPost");
 
     if (bodyData) {
       if (dataType === "json") {
@@ -63,6 +66,7 @@ export abstract class ApiBase {
    * @param config The request {@linkcode RequestInit | Configuration}.
    */
   protected async doFetch(path: string, config: RequestInit): Promise<Response> {
+    console.log("start doFetch");
     config.headers = {
       ...config.headers,
       Authorization: getCookie(SESSION_ID_COOKIE_NAME),
@@ -70,6 +74,7 @@ export abstract class ApiBase {
     };
 
     if (import.meta.env.DEV) {
+      console.log("Sending?");
       console.log(`Sending ${config.method ?? "GET"} request to: `, this.base + path, config);
     }
 
@@ -84,6 +89,7 @@ export abstract class ApiBase {
    * @returns a {@linkcode URLSearchParams} representaton of {@linkcode data}
    */
   protected toUrlSearchParams<D extends Record<string, any>>(data: D) {
+    console.log("start toUrlSearchParams");
     const arr = Object.entries(data)
       .map(([ key, value ]) => (value !== undefined ? [ key, String(value) ] : [ key, "" ]))
       .filter(([ , value ]) => value !== "");

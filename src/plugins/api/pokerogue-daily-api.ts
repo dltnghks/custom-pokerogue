@@ -13,6 +13,7 @@ export class PokerogueDailyApi extends ApiBase {
    * @returns The active daily-run seed as `string`.
    */
   public async getSeed() {
+    console.log("start getSeed");
     try {
       const response = await this.doGet("/daily/seed");
       return response.text();
@@ -27,6 +28,7 @@ export class PokerogueDailyApi extends ApiBase {
    * @param params The {@linkcode GetDailyRankingsRequest} to send
    */
   public async getRankings(params: GetDailyRankingsRequest) {
+    console.log("start getRankings");
     try {
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doGet(`/daily/rankings?${urlSearchParams}`);
@@ -43,6 +45,7 @@ export class PokerogueDailyApi extends ApiBase {
    * @param params The {@linkcode GetDailyRankingsPageCountRequest} to send.
    */
   public async getRankingsPageCount(params: GetDailyRankingsPageCountRequest) {
+    console.log("start getRankingsPageCount");
     try {
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doGet(`/daily/rankingpagecount?${urlSearchParams}`);

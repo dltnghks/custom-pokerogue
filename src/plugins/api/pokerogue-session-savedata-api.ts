@@ -22,6 +22,7 @@ export class PokerogueSessionSavedataApi extends ApiBase {
    * @returns The raw savedata as `string`.
    */
   public async newclear(params: NewClearSessionSavedataRequest) {
+    console.log("start session newclear");
     try {
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doGet(`/savedata/session/newclear?${urlSearchParams}`);
@@ -40,6 +41,7 @@ export class PokerogueSessionSavedataApi extends ApiBase {
    * @returns The session as `string`
    */
   public async get(params: GetSessionSavedataRequest) {
+    console.log("start session get");
     try {
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doGet(`/savedata/session/get?${urlSearchParams}`);
@@ -58,6 +60,7 @@ export class PokerogueSessionSavedataApi extends ApiBase {
    * @returns An error message if something went wrong
    */
   public async update(params: UpdateSessionSavedataRequest, rawSavedata: string) {
+    console.log("start session update");
     try {
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doPost(`/savedata/session/update?${urlSearchParams}`, rawSavedata);
@@ -76,6 +79,7 @@ export class PokerogueSessionSavedataApi extends ApiBase {
    * @returns An error message if something went wrong
    */
   public async delete(params: DeleteSessionSavedataRequest) {
+    console.log("start session delete");
     try {
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doGet(`/savedata/session/delete?${urlSearchParams}`);
@@ -98,6 +102,7 @@ export class PokerogueSessionSavedataApi extends ApiBase {
    * @param sessionData The {@linkcode SessionSaveData} object
    */
   public async clear(params: ClearSessionSavedataRequest, sessionData: SessionSaveData) {
+    console.log("start session clear");
     try {
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doPost(`/savedata/session/clear?${urlSearchParams}`, sessionData);

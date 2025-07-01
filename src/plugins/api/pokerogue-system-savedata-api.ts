@@ -18,6 +18,7 @@ export class PokerogueSystemSavedataApi extends ApiBase {
    * @returns The system savedata as `string` or `null` on error
    */
   public async get(params: GetSystemSavedataRequest) {
+    console.log("start system get");
     try {
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doGet(`/savedata/system/get?${urlSearchParams}`);
@@ -39,6 +40,7 @@ export class PokerogueSystemSavedataApi extends ApiBase {
    * TODO: add handling for errors
    */
   public async verify(params: VerifySystemSavedataRequest) {
+    console.log("start system verify");
     const urlSearchParams = this.toUrlSearchParams(params);
     const response = await this.doGet(`/savedata/system/verify?${urlSearchParams}`);
 
@@ -63,6 +65,7 @@ export class PokerogueSystemSavedataApi extends ApiBase {
    * @returns An error message if something went wrong
    */
   public async update(params: UpdateSystemSavedataRequest, rawSystemData: string) {
+    console.log("start system update");
     try {
       const urSearchParams = this.toUrlSearchParams(params);
       const response = await this.doPost(`/savedata/system/update?${urSearchParams}`, rawSystemData);

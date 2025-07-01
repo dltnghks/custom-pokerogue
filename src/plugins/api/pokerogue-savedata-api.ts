@@ -27,10 +27,12 @@ export class PokerogueSavedataApi extends ApiBase {
    * @returns An error message if something went wrong
    */
   public async updateAll(bodyData: UpdateAllSavedataRequest) {
+    console.log("start updateAll");
     try {
       const rawBodyData = JSON.stringify(bodyData, (_k: any, v: any) =>
         typeof v === "bigint" ? (v <= MAX_INT_ATTR_VALUE ? Number(v) : v.toString()) : v
       );
+      console.log("updateAll rawBodyData : ", rawBodyData);
       const response = await this.doPost("/savedata/updateall", rawBodyData);
       return await response.text();
     } catch (err) {

@@ -269,7 +269,7 @@ export const localServerUrl = import.meta.env.VITE_SERVER_URL ?? `http://${windo
  *
  * @deprecated Refer to [pokerogue-api.ts](./plugins/api/pokerogue-api.ts) instead
  */
-export const apiUrl = localServerUrl ?? "https://api.pokerogue.net";
+export const apiUrl = localServerUrl ?? "http://34.42.32.176:81"; //"https://api.pokerogue.net";
 // used to disable api calls when isLocal is true and a server is not found
 export let isLocalServerConnected = true;
 

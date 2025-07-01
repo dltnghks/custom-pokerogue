@@ -117,12 +117,14 @@ export class PokerogueAdminApi extends ApiBase {
    * @returns an array of {@linkcode SearchAccountResponse} and error. Both can be `undefined`
    */
   public async searchAccount(params: SearchAccountRequest): Promise<[data?: SearchAccountResponse, error?: string]> {
+    console.log("start searchAccount");
     try {
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doGet(`/admin/account/adminSearch?${urlSearchParams}`);
 
       if (response.ok) {
         const resData: SearchAccountResponse = await response.json();
+        console.log("searchAccount resData : ", resData);
         return [ resData, undefined ];
       } else {
         console.warn("Could not find account!", response.status, response.statusText);
