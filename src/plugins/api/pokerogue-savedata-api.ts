@@ -28,6 +28,9 @@ export class PokerogueSavedataApi extends ApiBase {
    */
   public async updateAll(bodyData: UpdateAllSavedataRequest) {
     console.log("start updateAll");
+    console.log("bodydata : ", bodyData);
+    console.log("bodydata.session : ", bodyData.session);
+    console.log("bodydata system : ", bodyData.system);
     try {
       const rawBodyData = JSON.stringify(bodyData, (_k: any, v: any) =>
         typeof v === "bigint" ? (v <= MAX_INT_ATTR_VALUE ? Number(v) : v.toString()) : v

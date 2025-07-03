@@ -24,9 +24,12 @@ export class PokerogueSessionSavedataApi extends ApiBase {
   public async newclear(params: NewClearSessionSavedataRequest) {
     console.log("start session newclear");
     try {
+      console.log("go to toUrlSearchParams2");
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doGet(`/savedata/session/newclear?${urlSearchParams}`);
       const json = await response.json();
+
+      console.log("session newclear 응답 : ", response);
 
       return Boolean(json);
     } catch (err) {
@@ -43,8 +46,11 @@ export class PokerogueSessionSavedataApi extends ApiBase {
   public async get(params: GetSessionSavedataRequest) {
     console.log("start session get");
     try {
+      console.log("go to toUrlSearchParams3");
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doGet(`/savedata/session/get?${urlSearchParams}`);
+
+      console.log("session get 응답 : ", response);
 
       return await response.text();
     } catch (err) {
@@ -62,8 +68,11 @@ export class PokerogueSessionSavedataApi extends ApiBase {
   public async update(params: UpdateSessionSavedataRequest, rawSavedata: string) {
     console.log("start session update");
     try {
+      console.log("go to toUrlSearchParams4");
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doPost(`/savedata/session/update?${urlSearchParams}`, rawSavedata);
+
+      console.log("session update 응답 : ", response);
 
       return await response.text();
     } catch (err) {
@@ -81,8 +90,11 @@ export class PokerogueSessionSavedataApi extends ApiBase {
   public async delete(params: DeleteSessionSavedataRequest) {
     console.log("start session delete");
     try {
+      console.log("go to toUrlSearchParams5");
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doGet(`/savedata/session/delete?${urlSearchParams}`);
+
+      console.log("session delete 응답 : ", response);
 
       if (response.ok) {
         return null;
@@ -104,8 +116,11 @@ export class PokerogueSessionSavedataApi extends ApiBase {
   public async clear(params: ClearSessionSavedataRequest, sessionData: SessionSaveData) {
     console.log("start session clear");
     try {
+      console.log("go to toUrlSearchParams6");
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doPost(`/savedata/session/clear?${urlSearchParams}`, sessionData);
+
+      console.log("session clear 응답 : ", response);
 
       return (await response.json()) as ClearSessionSavedataResponse;
     } catch (err) {

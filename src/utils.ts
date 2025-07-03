@@ -318,6 +318,7 @@ export function getCookie(cName: string): string {
 export async function localPing() {
   if (isLocal) {
     const titleStats = await pokerogueApi.getGameTitleStats();
+    console.log("gametitle data 기달렸다가 받은거 표시");
     isLocalServerConnected = !!titleStats;
     console.log("isLocalServerConnected:", isLocalServerConnected);
   }

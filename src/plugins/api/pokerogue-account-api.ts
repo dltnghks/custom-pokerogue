@@ -20,8 +20,11 @@ export class PokerogueAccountApi extends ApiBase {
    */
   public async getInfo(): Promise<[data: AccountInfoResponse | null, status: number]> {//계정 정보 가져오기.
     console.log("start getInfo");
+
     try {
       const response = await this.doGet("/account/info");//GET으로 보내기.
+
+      console.log("getinfor 응답 : ", response);
 
       if (response.ok) {
         const resData = (await response.json()) as AccountInfoResponse;
@@ -43,9 +46,10 @@ export class PokerogueAccountApi extends ApiBase {
    * @returns An error message if something went wrong
    */
   public async register(registerData: AccountRegisterRequest) {//계정 등록하기.
+    console.log(registerData);
     try {
       const response = await this.doPost("/account/register", registerData, "form-urlencoded");//POST로 보내기.
-
+      console.log("register response : ", response);
       if (response.ok) {
         return null;
       } else {
@@ -67,8 +71,12 @@ export class PokerogueAccountApi extends ApiBase {
   public async login(loginData: AccountLoginRequest) {//계정 로그인하기.
     console.log("login start");
     try {
+      console.log("logindata : ", loginData.username, loginData.password);
+
       const response = await this.doPost("/account/login", loginData, "form-urlencoded"); //POST로 보내기. 근데 왜 POST인거지? GET을 해야하는거 아닌가?
       //보안 때문
+
+      console.log("응답 로그인 : ", response);
 
       if (response.ok) {//POST에 정상적으로 수신에 성공하는 경우.
         const loginResponse = (await response.json()) as AccountLoginResponse;
@@ -94,6 +102,8 @@ export class PokerogueAccountApi extends ApiBase {
     console.log("start logout");
     try {
       const response = await this.doGet("/account/logout");
+
+      console.log("logout 응답 : ", response);
 
       if (!response.ok) {
         throw new Error(`${response.status}: ${response.statusText}`);

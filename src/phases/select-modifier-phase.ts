@@ -239,6 +239,7 @@ export class SelectModifierPhase extends BattlePhase {
   }
 
   updateSeed(): void {
+    console.log("resetseed updateseed");
     globalScene.resetSeed();
   }
 

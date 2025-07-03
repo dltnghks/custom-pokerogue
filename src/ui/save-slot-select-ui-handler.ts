@@ -122,6 +122,7 @@ export default class SaveSlotSelectUiHandler extends MessageUiHandler {
               if (this.sessionSlots[cursor].hasData) {
                 ui.showText(i18next.t("saveSlotSelectUiHandler:overwriteData"), null, () => {
                   ui.setOverlayMode(Mode.CONFIRM, () => {
+                    console.log("deletesession 시작.");
                     globalScene.gameData.deleteSession(cursor).then(response => {
                       if (response === false) {
                         globalScene.reset(true);

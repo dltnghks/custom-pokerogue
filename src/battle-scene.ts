@@ -1441,6 +1441,7 @@ export default class BattleScene extends SceneBase {
     // Reset RNG after end of game or save & quit.
     // This needs to happen after clearing this.currentBattle or the seed will be affected by the last wave played
     this.setSeed(Overrides.SEED_OVERRIDE || Utils.randomString(24));
+    console.log("setSeed 여긴가?");
     console.log("Seed:", this.seed);
     this.resetSeed();
 
@@ -1551,6 +1552,7 @@ export default class BattleScene extends SceneBase {
 
     let battleConfig: FixedBattleConfig | null = null;
 
+    console.log("resetSeed newBattle");
     this.resetSeed(newWaveIndex);
 
     const playerField = this.getPlayerField();
@@ -2131,6 +2133,7 @@ export default class BattleScene extends SceneBase {
     const wave = waveIndex || this.currentBattle?.waveIndex || 0;
     this.waveSeed = Utils.shiftCharCodes(this.seed, wave);
     Phaser.Math.RND.sow([ this.waveSeed ]);
+    console.log("resetSeed");
     console.log("Wave Seed:", this.waveSeed, wave);
     this.rngCounter = 0;
   }
@@ -3064,6 +3067,7 @@ export default class BattleScene extends SceneBase {
 
     this.standbyPhase = this.currentPhase;
     this.currentPhase = phase;
+    console.log("start phase 문구있는 부분");
     console.log(`%cStart Phase ${phase.constructor.name}`, "color:green;");
     phase.start();
 

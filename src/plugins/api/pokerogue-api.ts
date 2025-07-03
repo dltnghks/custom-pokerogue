@@ -33,6 +33,9 @@ export class PokerogueApi extends ApiBase {
     console.log("start getGameTitleStats");
     try {
       const response = await this.doGet("/game/titlestats");
+
+      console.log("getgametitlestats 응답 : ", response);
+
       return (await response.json()) as TitleStatsResponse;
     } catch (err) {
       console.warn("Could not get game title stats!", err);

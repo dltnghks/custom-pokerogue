@@ -971,6 +971,7 @@ export function calculateMEAggregateStats(baseSpawnWeight: number) {
     let currentBiome = Biome.TOWN;
     let currentArena = globalScene.newArena(currentBiome);
     globalScene.setSeed(Utils.randomString(24));
+    console.log("resetSeed calculateNumEncounters");
     globalScene.resetSeed();
     for (let i = 10; i < 180; i++) {
       // Boss
@@ -1127,6 +1128,7 @@ export function calculateRareSpawnAggregateStats(luckValue: number) {
   const calculateNumRareEncounters = (): any[] => {
     const bossEncountersByRarity = [ 0, 0, 0, 0 ];
     globalScene.setSeed(Utils.randomString(24));
+    console.log("resetSeed calculateNumRareEncounters");
     globalScene.resetSeed();
     // There are 12 wild boss floors
     for (let i = 0; i < 12; i++) {

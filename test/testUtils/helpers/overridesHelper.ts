@@ -268,6 +268,7 @@ export class OverridesHelper extends GameManagerHelper {
       Phaser.Math.RND.sow([ seed ]);
       this.game.scene.rngCounter = 0;
     });
+    console.log("resetSeed seed func");
     this.game.scene.resetSeed();
     this.log(`Seed set to "${seed}"!`);
     return this;

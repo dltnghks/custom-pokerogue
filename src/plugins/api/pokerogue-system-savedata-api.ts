@@ -20,9 +20,12 @@ export class PokerogueSystemSavedataApi extends ApiBase {
   public async get(params: GetSystemSavedataRequest) {
     console.log("start system get");
     try {
+      console.log("go to toUrlSearchParams7");
       const urlSearchParams = this.toUrlSearchParams(params);
       const response = await this.doGet(`/savedata/system/get?${urlSearchParams}`);
       const rawSavedata = await response.text();
+
+      console.log("system get 응답 : ", rawSavedata);
 
       return rawSavedata;
     } catch (err) {
@@ -41,11 +44,16 @@ export class PokerogueSystemSavedataApi extends ApiBase {
    */
   public async verify(params: VerifySystemSavedataRequest) {
     console.log("start system verify");
+    console.log("go to toUrlSearchParams8");
     const urlSearchParams = this.toUrlSearchParams(params);
     const response = await this.doGet(`/savedata/system/verify?${urlSearchParams}`);
+    console.log("verify params : ", params);
+    console.log("sytem verify 응답 : ", response);
 
     if (response.ok) {
       const verifySavedata = (await response.json()) as VerifySystemSavedataResponse;
+      console.log("verifysavedata vaild : ", verifySavedata.valid);
+      console.log("verifysavedata systemdata : ", verifySavedata.systemData);
 
       if (!verifySavedata.valid) {
         console.warn("Invalid system savedata!");
@@ -67,8 +75,11 @@ export class PokerogueSystemSavedataApi extends ApiBase {
   public async update(params: UpdateSystemSavedataRequest, rawSystemData: string) {
     console.log("start system update");
     try {
+      console.log("go to toUrlSearchParams9");
       const urSearchParams = this.toUrlSearchParams(params);
       const response = await this.doPost(`/savedata/system/update?${urSearchParams}`, rawSystemData);
+
+      console.log("system update 응답 : ", response);
 
       return await response.text();
     } catch (err) {

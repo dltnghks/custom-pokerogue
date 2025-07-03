@@ -436,6 +436,7 @@ export class GameData {
       }
 
       if (!bypassLogin) {
+        console.log("system get call point");
         pokerogueApi.savedata.system.get({ clientSessionId })
           .then(saveDataOrErr => {
             if (!saveDataOrErr || saveDataOrErr.length === 0 || saveDataOrErr[0] !== "{") {
@@ -1026,6 +1027,7 @@ export class GameData {
           }
 
           globalScene.setSeed(sessionData.seed || globalScene.game.config.seed[0]);
+          console.log("resetSeed initSessionFromData");
           globalScene.resetSeed();
 
           console.log("Seed:", globalScene.seed);
@@ -1218,13 +1220,16 @@ export class GameData {
    */
   async tryClearSession(slotId: number): Promise<[success: boolean, newClear: boolean]> {
     let result: [boolean, boolean] = [ false, false ];
-
+    console.log("tryclearsession");
     if (bypassLogin) {
+      console.log(bypassLogin, "bypasslogin true");
       localStorage.removeItem(`sessionData${slotId ? slotId : ""}_${loggedInUser?.username}`);
       result = [ true, true ];
     } else {
+      console.log("bypasslogin false");
       const sessionData = this.getSessionSaveData();
       const { trainerId } = this;
+      console.log("clear call");
       const jsonResponse = await pokerogueApi.savedata.session.clear({ slot: slotId, trainerId, clientSessionId }, sessionData);
 
       if (!jsonResponse?.error) {
@@ -1343,6 +1348,8 @@ export class GameData {
         localStorage.setItem(`sessionData${globalScene.sessionSlotId ? globalScene.sessionSlotId : ""}_${loggedInUser?.username}`, encrypt(JSON.stringify(sessionData), bypassLogin));
 
         console.debug("Session data saved");
+
+        console.log("updateall or verify", bypassLogin, sync);
 
         if (!bypassLogin && sync) {
           pokerogueApi.savedata.updateAll(request)
@@ -1481,6 +1488,7 @@ export class GameData {
                 localStorage.setItem(dataKey, encrypt(dataStr, bypassLogin));
 
                 if (!bypassLogin && dataType < GameDataType.SETTINGS) {
+                  console.log("update start point");
                   updateUserInfo().then(success => {
                     if (!success[0]) {
                       return displayError(`Could not contact the server. Your ${dataName} data could not be imported.`);

@@ -40,11 +40,13 @@ export abstract class ApiBase {
     console.log("start doPost");
 
     if (bodyData) {
+      console.log(bodyData);
       if (dataType === "json") {
         body = typeof bodyData === "string" ? bodyData : JSON.stringify(bodyData);
         headers["Content-Type"] = "application/json";
       } else if (dataType === "form-urlencoded") {
         if (bodyData instanceof Object) {
+          console.log("go to toUrlSearchParams");
           body = this.toUrlSearchParams(bodyData).toString();
         } else {
           console.warn("Could not add body data to form-urlencoded!", bodyData);
@@ -77,7 +79,7 @@ export abstract class ApiBase {
       console.log("Sending?");
       console.log(`Sending ${config.method ?? "GET"} request to: `, this.base + path, config);
     }
-
+    console.log("path : ", path, "config : ", config);
     return await fetch(this.base + path, config);
   }
 

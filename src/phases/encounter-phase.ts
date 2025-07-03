@@ -269,6 +269,7 @@ export class EncounterPhase extends BattlePhase {
               return globalScene.reset(true);
             }
             this.doEncounter();
+            console.log("resetSeed saveAll after");
             globalScene.resetSeed();
           });
         } else {
