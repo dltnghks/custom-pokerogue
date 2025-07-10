@@ -200,10 +200,12 @@ export default class MenuUiHandler extends MessageUiHandler {
       });
     };
 
+    console.log("importdata init1");
     if (Utils.isLocal || Utils.isBeta) {
       manageDataOptions.push({
         label: i18next.t("menuUiHandler:importSession"),
         handler: () => {
+          console.log("importdata init2");
           confirmSlot(i18next.t("menuUiHandler:importSlotSelect"), () => true, slotId => globalScene.gameData.importData(GameDataType.SESSION, slotId));
           return true;
         },

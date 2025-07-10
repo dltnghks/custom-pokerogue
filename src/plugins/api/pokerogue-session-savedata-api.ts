@@ -45,6 +45,7 @@ export class PokerogueSessionSavedataApi extends ApiBase {
    */
   public async get(params: GetSessionSavedataRequest) {
     console.log("start session get");
+    console.log("params : ", params);
     try {
       console.log("go to toUrlSearchParams3");
       const urlSearchParams = this.toUrlSearchParams(params);

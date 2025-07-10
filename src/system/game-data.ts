@@ -1425,6 +1425,7 @@ export class GameData {
   }
 
   public importData(dataType: GameDataType, slotId: number = 0): void {
+    console.log("importdata for update");
     const dataKey = `${getDataTypeKey(dataType, slotId)}_${loggedInUser?.username}`;
 
     let saveFile: any = document.getElementById("saveFile");
