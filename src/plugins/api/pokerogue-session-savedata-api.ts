@@ -68,9 +68,11 @@ export class PokerogueSessionSavedataApi extends ApiBase {
    */
   public async update(params: UpdateSessionSavedataRequest, rawSavedata: string) {
     console.log("start session update");
+    console.log("rawsavedata : ", rawSavedata);
     try {
       console.log("go to toUrlSearchParams4");
       const urlSearchParams = this.toUrlSearchParams(params);
+      console.log("rawsavedata : ", rawSavedata);
       const response = await this.doPost(`/savedata/session/update?${urlSearchParams}`, rawSavedata);
 
       console.log("session update 응답 : ", response);
