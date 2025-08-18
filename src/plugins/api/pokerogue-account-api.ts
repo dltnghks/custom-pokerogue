@@ -6,7 +6,8 @@ import type {
 } from "#app/@types/PokerogueAccountApi";
 import { SESSION_ID_COOKIE_NAME } from "#app/constants";
 import { ApiBase } from "#app/plugins/api/api-base";
-import { removeCookie, setCookie } from "#app/utils";
+import { removeCookie, setCookie, TestsetCookie, TestremoveCookie } from "#app/utils";
+//import { get } from "http";
 
 /**
  * A wrapper for PokéRogue account API requests.
@@ -73,7 +74,7 @@ export class PokerogueAccountApi extends ApiBase {
     try {
       console.log("logindata : ", loginData.username, loginData.password);
 
-      const response = await this.doPost("/account/login", loginData, "form-urlencoded"); //POST로 보내기. 근데 왜 POST인거지? GET을 해야하는거 아닌가?
+      const response = await this.doPost("/account/login", loginData, "form-urlencoded");
       //보안 때문
 
       console.log("응답 로그인 : ", response);
@@ -81,7 +82,11 @@ export class PokerogueAccountApi extends ApiBase {
       if (response.ok) {//POST에 정상적으로 수신에 성공하는 경우.
         const loginResponse = (await response.json()) as AccountLoginResponse;
         console.log("loginResponse.token", loginResponse.token, " and cookie", SESSION_ID_COOKIE_NAME);
+        TestsetCookie(SESSION_ID_COOKIE_NAME, loginResponse.token);
         setCookie(SESSION_ID_COOKIE_NAME, loginResponse.token);
+        removeCookie(SESSION_ID_COOKIE_NAME);
+        //const { token } = loginResponse.token;
+        localStorage.setItem("access_token", loginResponse.token);
         return null;
       } else {//비정상적인 경우.
         console.warn("Login failed!", response.status, response.statusText);
@@ -112,6 +117,7 @@ export class PokerogueAccountApi extends ApiBase {
       console.warn("Log out failed!", err);
     }
     console.log("remove cookie", SESSION_ID_COOKIE_NAME);
-    removeCookie(SESSION_ID_COOKIE_NAME); // we are always clearing the cookie.
+    localStorage.removeItem("access_token");
+    TestremoveCookie(SESSION_ID_COOKIE_NAME); // we are always clearing the cookie.
   }
 }

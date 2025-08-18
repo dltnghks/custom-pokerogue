@@ -1,5 +1,6 @@
 import { SESSION_ID_COOKIE_NAME } from "#app/constants";
 import { getCookie } from "#app/utils";
+import { TestgetCookie } from "#app/utils";
 
 type DataType = "json" | "form-urlencoded";
 
@@ -69,11 +70,34 @@ export abstract class ApiBase {
    */
   protected async doFetch(path: string, config: RequestInit): Promise<Response> {
     console.log("start doFetch");
-    config.headers = {
-      ...config.headers,
-      Authorization: getCookie(SESSION_ID_COOKIE_NAME),
-      "Content-Type": config.headers?.["Content-Type"] ?? "application/json",
+    config.credentials = "include";
+
+    const token = localStorage.getItem("access_token");
+    const tokenFromCookie = TestgetCookie(SESSION_ID_COOKIE_NAME); //getCookie
+    const fooToken = getCookie(SESSION_ID_COOKIE_NAME);
+    console.log("token from localStorage: ", fooToken);
+
+    const baseHeaders: Record<string, string> = {
+      "Content-Type": (config.headers as any)?.["Content-Type"] ?? "application/json",
     };
+
+    if (!tokenFromCookie) {
+      if (token) {
+        baseHeaders.Authorization = `${token}`; // 서버 포맷에 맞게
+      }
+    } else {
+      baseHeaders.Authorization = `${tokenFromCookie}`; // 서버 포맷에 맞게
+    }
+
+    config.headers = {
+      ...baseHeaders,
+      ...(config.headers as any),
+    };
+    // config.headers = {
+    //   ...config.headers,
+    //   //Authorization: token,
+    //   "Content-Type": config.headers?.["Content-Type"] ?? "application/json",
+    // };
 
     if (import.meta.env.DEV) {
       console.log("Sending?");

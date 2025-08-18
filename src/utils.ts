@@ -269,7 +269,7 @@ export const localServerUrl = import.meta.env.VITE_SERVER_URL ?? `http://${windo
  *
  * @deprecated Refer to [pokerogue-api.ts](./plugins/api/pokerogue-api.ts) instead
  */
-export const apiUrl = localServerUrl ?? "http://34.42.32.176:81"; //"https://api.pokerogue.net";
+export const apiUrl = localServerUrl ?? "http://35.209.38.139:81"; //"https://api.pokerogue.net";
 // used to disable api calls when isLocal is true and a server is not found
 export let isLocalServerConnected = true;
 
@@ -281,6 +281,12 @@ export function setCookie(cName: string, cValue: string): void {
   document.cookie = `${cName}=${cValue};Secure;SameSite=Strict;Domain=${window.location.hostname};Path=/;Expires=${expiration.toUTCString()}`;
 }
 
+export function TestsetCookie(cName: string, cValue: string): void {
+  const expiration = new Date();
+  expiration.setTime(new Date().getTime() + 3600000 * 24 * 30 * 3/*7*/);
+  document.cookie = `${cName}=${cValue};SameSite=Strict;Path=/;Expires=${expiration.toUTCString()}`;
+}
+
 export function removeCookie(cName: string): void {
   if (isBeta) {
     document.cookie = `${cName}=;Secure;SameSite=Strict;Domain=pokerogue.net;Path=/;Max-Age=-1`; // we need to remove the cookie from the main domain as well
@@ -290,10 +296,39 @@ export function removeCookie(cName: string): void {
   document.cookie = `${cName}=;Secure;SameSite=Strict;Path=/;Max-Age=-1`; // legacy cookie without domain, for older cookies to prevent a login loop
 }
 
+export function TestremoveCookie(cName: string): void {
+  if (isBeta) {
+    document.cookie = `${cName}=;Secure;SameSite=Strict;Domain=pokerogue.net;Path=/;Max-Age=-1`; // we need to remove the cookie from the main domain as well
+  }
+
+  document.cookie = `${cName}=;SameSite=Strict;Path=/;Max-Age=-1`;
+  document.cookie = `${cName}=;SameSite=Strict;Path=/;Max-Age=-1`; // legacy cookie without domain, for older cookies to prevent a login loop
+}
+
 export function getCookie(cName: string): string {
   // check if there are multiple cookies with the same name and delete them
   if (document.cookie.split(";").filter(c => c.includes(cName)).length > 1) {
     removeCookie(cName);
+    return "";
+  }
+  const name = `${cName}=`;
+  const ca = document.cookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+export function TestgetCookie(cName: string): string {
+  // check if there are multiple cookies with the same name and delete them
+  if (document.cookie.split(";").filter(c => c.includes(cName)).length > 1) {
+    TestremoveCookie(cName);
     return "";
   }
   const name = `${cName}=`;
